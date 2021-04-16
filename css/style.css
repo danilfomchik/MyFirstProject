@@ -1,0 +1,86 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+ul[class],
+ol[class] {
+  padding: 0;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+ul[class],
+ol[class] {
+  list-style: none;
+}
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+article > * + * {
+  margin-top: 1em;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+.wrapper{
+    width: 70px;
+    position: absolute;
+}
+.paint-tools{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #c2c2c2;
+    margin: 10px auto;
+    position: relative;
+    background-color: #dfdfdf;
+    cursor: pointer;
+}
+.paint-tools img{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+/* #myCanvas{
+    background-color:#eee;
+    border: 1px solid #ccc;
+    width: 90%;
+    height: 100%;
+}  */
