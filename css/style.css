@@ -28,6 +28,7 @@ body {
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  background-color: #fef5e5;
 }
 ul[class],
 ol[class] {
@@ -51,36 +52,106 @@ select {
 }
 @media (prefers-reduced-motion: reduce) {
   * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
   }
 }
+.undoArrows{
+  position: absolute;
+  top: 5px;
+  color: #5d5d5d;
+  width: 120px;
+}
+.fa-arrow-left{
+  margin: 0px 5px 0px 35px;
+  cursor: pointer;
+}
+.fa-arrow-right{
+  margin: 0px 35px 0px 10px;
+  cursor: pointer;
+}
 .wrapper{
-    width: 70px;
-    position: absolute;
+  width: 120px;
+  position: absolute;
+  top: 35px;
 }
-.paint-tools{
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    border: 1px solid #c2c2c2;
-    margin: 10px auto;
-    position: relative;
-    background-color: #dfdfdf;
-    cursor: pointer;
+.tools{
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  border: 1px solid #c2c2c2;
+  margin: 10px auto;
+  position: relative;
+  background-color: #dfdfdf;
+  cursor: pointer;
 }
-.paint-tools img{
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    left: 10px;
-    top: 10px;
+.tools:hover{
+  box-shadow: 0px 0px 15px #747474;
 }
-/* #myCanvas{
-    background-color:#eee;
-    border: 1px solid #ccc;
-    width: 90%;
-    height: 100%;
-}  */
+.activeTool{
+  cursor: url(../pictures/pen.png), auto;
+  background-color: yellow;
+  box-shadow: 0px 0px 5px #747474;
+  transition: all 1s;
+  border: 1px solid #d9d900;
+}
+.tools img{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+.eraserTool img{
+  transform: rotate(12deg);
+}
+#myCanvas{
+  width: 90vw;
+  border: 1px solid #bababa;
+  position: absolute;
+  left: 120px;
+  margin: 5px 0px;
+  background-color: white;
+}
+.pencilCursor{
+  cursor: url('../pictures/small-pencil.png'), pointer;
+}
+.eraserCursor{
+  cursor: url('../pictures/small-eraser.png'), pointer;
+}
+.paintCursor{
+  cursor: url('../pictures/small-paint-tool.png'), pointer;
+}
+.pipetCursor{
+  cursor: url('../pictures/small-pipet.png'), pointer;
+}
+.loupeCursor{
+  cursor: url('../pictures/small-loupe.png'), pointer;
+}
+.paletteCursor{
+  cursor: url('../pictures/small-palette.png'), pointer;
+}
+.colorInput{
+  width: 120px;
+  height: 40px;
+  cursor: pointer;
+}
+.downloadFavicon{
+  position: absolute;
+  top: 650px;
+  width: 50px;
+  height: 40px;
+  left: 35px;
+}
+.fa-cloud-download-alt{
+  color: #747474;
+  position: absolute;
+  font-size: 40px;
+  cursor: pointer;
+}
+.fa-cloud-download-alt::before{
+  width: 300px;
+  height: 300px;
+}

@@ -15,20 +15,39 @@
         <title>Paint</title>
         <link href="./pictures/paintLogo.png" rel="icon" type="image/png">
         <link rel="stylesheet" href="./css/style.css">
+        <script src="https://kit.fontawesome.com/6cb87dd491.js" crossorigin="anonymous"></script>
     </head>
     <body>
+        <diV class="undoArrows">
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-right"></i>
+        </diV>
         <div class="wrapper">
-            <div class="paint-tools">
-                <img src="./pictures/pencil.png">
+            <div class="tools pencilTool">
+                <img src="./pictures/pencil.png" alt="">
             </div>
-            <div class="paint-tools"></div>
-            <div class="paint-tools"></div>
-            <div class="paint-tools"></div>
-            <div class="paint-tools"></div>
-            <div class="paint-tools"></div>
+            <div class="tools eraserTool">
+                <img src="./pictures/eraser.png" alt="">
+            </div>
+            <div class="tools paintTool">
+                <img src="./pictures/paint-tool.png" alt="">
+            </div>
+            <div class="tools pipetTool">
+                <img src="./pictures/pipet.png" alt="">
+            </div>
+            <div class="tools loupeTool">
+                <img src="./pictures/loupe.png" alt="">
+            </div>
+            <div class="tools paletteTool">
+                <img src="./pictures/palette.png" alt="">
+            </div>
         </div>
         <canvas id="myCanvas"></canvas>
 
+
+        <div class="downloadFavicon">
+            <i class="fas fa-cloud-download-alt"></i>
+        </div>
         <script src="./js/custom.js"></script>
     </body>
 </html>
