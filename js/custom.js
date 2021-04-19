@@ -6,11 +6,12 @@ var loupeTool = document.querySelector('.loupeTool');
 var paletteTool = document.querySelector('.paletteTool');
 var wrapper = document.querySelector('.wrapper');
 var downloadFavicon = document.querySelector('.downloadFavicon');
-
+var colorInput = document.querySelector('.colorInput');
 
 var canvas = document.querySelector('#myCanvas')
 ctx = canvas.getContext('2d');
 
+// добавляем класс activeTool для инструментов
 initElems('.tools')
 
 function initElems(selector){
@@ -19,13 +20,17 @@ function initElems(selector){
     for(var i = 0; i < tools.length; i++){
         tools[i].addEventListener('click', function(event){
             deactivateActiveTool();
-    
+            removeClassList()
+
             this.classList.add('activeTool')
+            // canvas.classList.add('pencilCursor');
+
             event.stopPropagation();
         })
     }
 }
 
+// деактивируем класс activeTool для инструментов
 function deactivateActiveTool(){
     var active = getActiveTool();
     if(active){
@@ -33,8 +38,16 @@ function deactivateActiveTool(){
     }
 }
 
+// получаем класс activeTool
 function getActiveTool (){
     return document.querySelector('.activeTool');
+}
+
+// удаляем класс у канваса
+function removeClassList(){
+    if(canvas.classList.length > 0){
+        canvas.classList = '';
+    }
 }
 
 //карандаш
@@ -59,12 +72,7 @@ loupeTool.addEventListener('click', function(){
 })
 //палитра
 paletteTool.addEventListener('click', function(){
-    // var colorInput = document.createElement('input');
-    // colorInput.setAttribute('type', 'color');
-    // colorInput.setAttribute('class', 'colorInput');
-
-    // wrapper.appendChild(colorInput);
-    // console.log(wrapper);
+    colorInput.style.display = 'block';
 })
 
 downloadFavicon.addEventListener('click', function(){

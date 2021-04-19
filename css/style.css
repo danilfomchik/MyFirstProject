@@ -91,7 +91,6 @@ select {
   box-shadow: 0px 0px 15px #747474;
 }
 .activeTool{
-  cursor: url(../pictures/pen.png), auto;
   background-color: yellow;
   box-shadow: 0px 0px 5px #747474;
   transition: all 1s;
@@ -134,9 +133,11 @@ select {
   cursor: url('../pictures/small-palette.png'), pointer;
 }
 .colorInput{
-  width: 120px;
+  width: 100px;
   height: 40px;
+  margin: 25px auto;
   cursor: pointer;
+  display: none;
 }
 .downloadFavicon{
   position: absolute;
