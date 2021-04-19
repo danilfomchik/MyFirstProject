@@ -23,8 +23,6 @@ function initElems(selector){
             removeClassList()
 
             this.classList.add('activeTool')
-            // canvas.classList.add('pencilCursor');
-
             event.stopPropagation();
         })
     }
