@@ -129,9 +129,6 @@ select {
 .loupeCursor{
   cursor: url('../pictures/small-loupe.png'), pointer;
 }
-.paletteCursor{
-  cursor: url('../pictures/small-palette.png'), pointer;
-}
 .colorInput{
   width: 100px;
   height: 40px;

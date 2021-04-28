@@ -2,31 +2,43 @@
     {
         "id": 1,
         "name": "pencilTool",
-        "src": "./pictures/pencil.png"
+        "src": "./pictures/pencil.png",
+        "cursorClass": "pencilCursor",
+        "cursor_url": "../pictures/small-pencil.png"
     },
     {
         "id": 2,
         "name": "eraserTool",
-        "src": "./pictures/eraser.png"
+        "src": "./pictures/eraser.png",
+        "cursorClass": "eraserCursor",
+        "cursor_url": "../pictures/small-eraser.png"
     },
     {
         "id": 3,
         "name": "paintTool",
-        "src": "./pictures/paint-tool.png"
+        "src": "./pictures/paint-tool.png",
+        "cursorClass": "paintCursor",
+        "cursor_url": "../pictures/small-paint-tool.png"
     },
     {
         "id": 4,
         "name": "pipetTool",
-        "src": "./pictures/pipet.png"
+        "src": "./pictures/pipet.png",
+        "cursorClass": "pipetCursor",
+        "cursor_url": "../pictures/small-pipet.png"
     },
     {
         "id": 5,
         "name": "loupeTool",
-        "src": "./pictures/loupe.png"
+        "src": "./pictures/loupe.png",
+        "cursorClass": "loupeCursor",
+        "cursor_url": "../pictures/small-loupe.png"
     },
     {
         "id": 6,
         "name": "paletteTool",
-        "src": "./pictures/palette.png"
+        "src": "./pictures/palette.png",
+        "cursorClass": "paletteCursor",
+        "cursor_url": "../pictures/small-palette.png"
     }
 ]

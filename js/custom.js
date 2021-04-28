@@ -1,24 +1,69 @@
-var pencilTool = document.querySelector('.pencilTool');
-var eraserTool = document.querySelector('.eraserTool');
-var paintTool = document.querySelector('.paintTool');
-var pipetTool = document.querySelector('.pipetTool');
-var loupeTool = document.querySelector('.loupeTool');
-var paletteTool = document.querySelector('.paletteTool');
-var wrapper = document.querySelector('.wrapper');
-var downloadFavicon = document.querySelector('.downloadFavicon');
-var colorInput = document.querySelector('.colorInput');
+const pencilTool = document.querySelector('.pencilTool');
+const eraserTool = document.querySelector('.eraserTool');
+const paintTool = document.querySelector('.paintTool');
+const pipetTool = document.querySelector('.pipetTool');
+const loupeTool = document.querySelector('.loupeTool');
+const paletteTool = document.querySelector('.paletteTool');
+const wrapper = document.querySelector('.wrapper');
+const downloadFavicon = document.querySelector('.downloadFavicon');
+const colorInput = document.querySelector('.colorInput');
+const toolsDiv = document.querySelector('.tools');
+const wrapperImg = document.querySelectorAll('.wrapperImg')
+const tools = document.querySelectorAll('.tools');
+
 
 var canvas = document.querySelector('#myCanvas')
 ctx = canvas.getContext('2d');
 
-// добавляем класс activeTool для инструментов
-initElems('.tools')
+//запрос данных о кнопках
+var toolsData = "./toolsData.json"
 
-function initElems(selector){
-    var tools = document.querySelectorAll(selector);
+async function getTools(url){
+    let fetchData = fetch(url)
+        .then((response) => {
+            if (response.status !== 200) {
+                alert('Whoops! Something went wrong!')
+            }
+            return Promise.resolve(response)
+        })
+        .then((url) => {
+            return url.json();
+        })
+    let result = await fetchData;
+
+    console.log('result-->', result);
+    for(i = 0; i < result.length; i++){
+        let toolName = result[i]["name"];
+        let toolSrc = result[i]["src"];
+        let cursorClass = result[i]["cursorClass"];
+
+        wrapperImg[i].src = toolSrc;
+        tools[i].classList.add(toolName);
+
+        tools[i].addEventListener('click', (event) => {
+            canvas.classList.add(cursorClass)
+            if(cursorClass == 'paletteCursor'){
+                colorInput.style.display = 'block';
+            }
+        })
+    }
+    downloadFavicon.addEventListener('click', () => {
+        alert('Разрешить скачивание файла?')
+    })
+}
+
+getTools(toolsData);
+
+
+// добавляем класс activeTool для инструментов
+initElems()
+
+function initElems(){
+
+    console.log('tools-->', tools);
 
     for(var i = 0; i < tools.length; i++){
-        tools[i].addEventListener('click', function(event){
+        tools[i].addEventListener('click', (event) => {
             deactivateActiveTool();
             removeClassList()
 
@@ -47,32 +92,3 @@ function removeClassList(){
         canvas.classList = '';
     }
 }
-
-//карандаш
-pencilTool.addEventListener('click', function(){
-    canvas.classList.add('pencilCursor');
-})
-//резинка
-eraserTool.addEventListener('click', function(){
-    canvas.classList.add('eraserCursor');
-})
-//заливка
-paintTool.addEventListener('click', function(){
-    canvas.classList.add('paintCursor');
-})
-//пипетка
-pipetTool.addEventListener('click', function(){
-    canvas.classList.add('pipetCursor');
-})
-//лупа
-loupeTool.addEventListener('click', function(){
-    canvas.classList.add('loupeCursor');
-})
-//палитра
-paletteTool.addEventListener('click', function(){
-    colorInput.style.display = 'block';
-})
-
-downloadFavicon.addEventListener('click', function(){
-    alert('Разрешить скачивание файла?')
-})
