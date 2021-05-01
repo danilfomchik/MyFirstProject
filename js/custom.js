@@ -7,13 +7,14 @@ const paletteTool = document.querySelector('.paletteTool');
 const wrapper = document.querySelector('.wrapper');
 const downloadFavicon = document.querySelector('.downloadFavicon');
 const colorInput = document.querySelector('.colorInput');
-const toolsDiv = document.querySelector('.tools');
-const wrapperImg = document.querySelectorAll('.wrapperImg')
+const wrapperImg = document.querySelectorAll('.wrapperImg');
 const tools = document.querySelectorAll('.tools');
 
+const canvas = document.querySelector('#myCanvas');
+context = canvas.getContext('2d');
+canvas.width = document.documentElement.clientWidth - 160;
+canvas.height = document.documentElement.clientHeight - 20;
 
-var canvas = document.querySelector('#myCanvas')
-ctx = canvas.getContext('2d');
 
 //запрос данных о кнопках
 var toolsData = "./toolsData.json"
@@ -29,31 +30,78 @@ async function getTools(url){
         .then((url) => {
             return url.json();
         })
-    let result = await fetchData;
+    const result = await fetchData;
 
     console.log('result-->', result);
-    for(i = 0; i < result.length; i++){
-        let toolName = result[i]["name"];
-        let toolSrc = result[i]["src"];
-        let cursorClass = result[i]["cursorClass"];
+
+    for(let i = 0; i < result.length; i++){
+        let {name:toolName, src:toolSrc, cursor} = result[i];
 
         wrapperImg[i].src = toolSrc;
         tools[i].classList.add(toolName);
 
-        tools[i].addEventListener('click', (event) => {
-            canvas.classList.add(cursorClass)
-            if(cursorClass == 'paletteCursor'){
+        tools[i].addEventListener('click', () => {
+            canvas.classList.add(cursor)
+
+            if(cursor == 'paletteCursor'){
                 colorInput.style.display = 'block';
+                // stopDrawing();
+            } 
+            else if(cursor == 'pencilCursor'){
+                drawing();
+            } else {
+                stopDrawing();
             }
+
+            // console.log(cursor);
         })
     }
-    downloadFavicon.addEventListener('click', () => {
-        alert('Разрешить скачивание файла?')
-    })
 }
-
 getTools(toolsData);
 
+
+//рисование
+var flag = true;
+
+function drawing(){
+
+    let mouse = { x:0, y:0};
+    let draw = false;
+
+    if(flag){
+        canvas.addEventListener("mousedown", function(e){   
+            mouse.x = e.pageX - this.offsetLeft;
+            mouse.y = e.pageY - this.offsetTop;
+            draw = true;
+            context.beginPath();
+            context.moveTo(mouse.x, mouse.y);
+        });
+        canvas.addEventListener("mousemove", function(e){
+             
+            if(draw == true){
+             
+                mouse.x = e.pageX - this.offsetLeft;
+                mouse.y = e.pageY - this.offsetTop;
+                context.lineTo(mouse.x, mouse.y);
+                context.strokeStyle = colorInput.value;
+                context.stroke();
+            }
+        });
+        canvas.addEventListener("mouseup", function(e){
+             
+            mouse.x = e.pageX - this.offsetLeft;
+            mouse.y = e.pageY - this.offsetTop;
+            context.lineTo(mouse.x, mouse.y);
+            context.stroke();
+            context.closePath();
+            draw = false;
+        });
+    }
+}
+
+function stopDrawing(){
+    flag = false;
+}
 
 // добавляем класс activeTool для инструментов
 initElems()
@@ -62,8 +110,8 @@ function initElems(){
 
     console.log('tools-->', tools);
 
-    for(var i = 0; i < tools.length; i++){
-        tools[i].addEventListener('click', (event) => {
+    for(let i = 0; i < tools.length; i++){
+        tools[i].addEventListener('click', function(event) {
             deactivateActiveTool();
             removeClassList()
 
@@ -74,21 +122,32 @@ function initElems(){
 }
 
 // деактивируем класс activeTool для инструментов
-function deactivateActiveTool(){
-    var active = getActiveTool();
+var deactivateActiveTool = () => {
+    const active = getActiveTool();
     if(active){
         active.classList.remove('activeTool')
     }
 }
 
 // получаем класс activeTool
-function getActiveTool (){
-    return document.querySelector('.activeTool');
-}
+var getActiveTool = () => document.querySelector('.activeTool');
 
 // удаляем класс у канваса
-function removeClassList(){
+var removeClassList = () => {
     if(canvas.classList.length > 0){
         canvas.classList = '';
     }
 }
+
+//скачивание рисунка
+downloadFavicon.addEventListener('click', () => {
+    let downloadAccept = confirm('Разрешить скачивание файла?');
+
+    if(downloadAccept === true){
+        let link = document.createElement('a');
+        link.download = 'newimage.png';
+        link.href = canvas.toDataURL()
+        link.click();
+        link.delete;
+    }
+});
