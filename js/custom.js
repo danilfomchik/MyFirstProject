@@ -40,21 +40,16 @@ async function getTools(url){
         wrapperImg[i].src = toolSrc;
         tools[i].classList.add(toolName);
 
-        tools[i].addEventListener('click', () => {
-            canvas.classList.add(cursor)
+        tools[i].addEventListener('click', () => canvas.classList.add(cursor), false) 
+        tools[i].addEventListener('click', pencilDraw, false)
 
-            if(cursor == 'paletteCursor'){
-                colorInput.style.display = 'block';
-                // stopDrawing();
-            } 
-            else if(cursor == 'pencilCursor'){
+        function pencilDraw(){
+            if(cursor == 'pencilCursor'){
                 drawing();
-            } else {
-                stopDrawing();
+                alert('r');
             }
-
-            // console.log(cursor);
-        })
+            tools[i].removeEventListener('click', pencilDraw, false) 
+        };
     }
 }
 getTools(toolsData);
