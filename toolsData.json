@@ -1,31 +1,29 @@
 [
     {
         "id": 1,
+        "name": "undoArrow",
+        "src": "./pictures/undo.png"
+    },
+    {
+        "id": 2,
         "name": "pencilTool",
         "src": "./pictures/pencil.png",
         "cursor": "pencilCursor",
         "cursor_url": "../pictures/small-pencil.png"
     },
     {
-        "id": 2,
+        "id": 3,
         "name": "eraserTool",
         "src": "./pictures/eraser.png",
         "cursor": "eraserCursor",
         "cursor_url": "../pictures/small-eraser.png"
     },
     {
-        "id": 3,
+        "id": 4,
         "name": "paintTool",
         "src": "./pictures/paint-tool.png",
         "cursor": "paintCursor",
         "cursor_url": "../pictures/small-paint-tool.png"
-    },
-    {
-        "id": 4,
-        "name": "pipetTool",
-        "src": "./pictures/pipet.png",
-        "cursor": "pipetCursor",
-        "cursor_url": "../pictures/small-pipet.png"
     },
     {
         "id": 5,
@@ -40,5 +38,10 @@
         "src": "./pictures/palette.png",
         "cursor": "paletteCursor",
         "cursor_url": "../pictures/small-palette.png"
+    },
+    {
+        "id": 7,
+        "name": "clearCanvas",
+        "src": "./pictures/clear.png"
     }
 ]

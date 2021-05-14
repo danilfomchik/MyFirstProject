@@ -75,7 +75,6 @@ select {
 .wrapper{
   width: 120px;
   position: absolute;
-  top: 35px;
 }
 .tools{
   border-radius: 50%;
@@ -117,7 +116,7 @@ select {
   cursor: url('../pictures/small-pencil.png') 0 70, pointer;
 }
 .eraserCursor{
-  cursor: url('../pictures/small-eraser.png') 0 70, pointer;
+  cursor: url('../pictures/small-eraser.png') 10 70, pointer;
 }
 .paintCursor{
   cursor: url('../pictures/small-paint-tool.png') 0 70, pointer;
