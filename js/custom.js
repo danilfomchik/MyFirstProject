@@ -9,6 +9,11 @@ const downloadFavicon = document.querySelector('.downloadFavicon');
 const colorInput = document.querySelector('.colorInput');
 const wrapperImg = document.querySelectorAll('.wrapperImg');
 const tools = document.querySelectorAll('.tools');
+
+var pencilWidthRange = document.querySelector('.pencilWidth');
+var eraserWidthRange = document.querySelector('.eraserWidth');
+
+
 let restTools = [...tools];
 
 var canvasImgArray = [];
@@ -82,6 +87,7 @@ getTools(toolsData);
 
 //событие для карандаша
 pencil.addEventListener('click', drawing)
+pencil.addEventListener('click', showPencilRange)
 
 //очистка листа
 clear.addEventListener('click', clearCanvas);
@@ -91,12 +97,13 @@ palette.addEventListener('click', showPallete);
 
 //ластик
 eraser.addEventListener('click', eraseImage)
+eraser.addEventListener('click', showEraserRange)
 
 //undo
 undoLast.addEventListener('click', undo_last)
 
 //loupe
-// loupe.addEventListener('click', zoom)
+loupe.addEventListener('click', loupeZoom)
 
 
 //рисование
@@ -113,20 +120,20 @@ function drawing(){
         draw = true;
         context.beginPath();
         context.moveTo(mouse.x, mouse.y);
-
-        bMouseDown = true;
     }
 
     canvas.addEventListener("mousemove", keepDrow);
     function keepDrow(e){
         context.globalCompositeOperation = 'source-over'; 
-        context.lineWidth = 5;
-
         if(draw == true){  
             mouse.x = e.pageX - this.offsetLeft;
             mouse.y = e.pageY - this.offsetTop;
+
+            context.lineWidth = pencilWidthRange.value;
             context.strokeStyle = colorInput.value;
             context.lineTo(mouse.x, mouse.y);
+            context.lineCap = 'round';
+            context.lineJoin = 'round';
             context.stroke();
         }
     }
@@ -139,7 +146,6 @@ function drawing(){
         context.stroke();
         context.closePath();
         draw = false;
-        bMouseDown = false;
         
         canvasImgArray.push(context.getImageData(0, 0, canvas.width, canvas.height));
         restoreIndex += 1;
@@ -165,21 +171,23 @@ function eraseImage(){
     canvas.addEventListener('mousemove', keepErase);
     function keepErase(e){
         if (isPress) {
-          var x = e.offsetX;
-          var y = e.offsetY;
-          context.globalCompositeOperation = 'destination-out';
-      
-          context.beginPath();
-          context.arc(x, y, 10, 0, 2 * Math.PI);
-          context.fill();
-      
-          context.lineWidth = 20;
-          context.beginPath();
-          context.moveTo(old.x, old.y);
-          context.lineTo(x, y);
-          context.stroke();
-      
-          old = {x: x, y: y};
+            var x = e.offsetX;
+            var y = e.offsetY;
+            context.globalCompositeOperation = 'destination-out';
+        
+            context.beginPath();
+            context.arc(x, y, 10, 0, 2 * Math.PI);
+            context.fill();
+
+            context.lineWidth = eraserWidthRange.value;
+            context.beginPath();
+            context.moveTo(old.x, old.y);
+            context.lineTo(x, y);
+            context.lineCap = 'round';
+            context.lineJoin = 'round';
+            context.stroke();
+        
+            old = {x: x, y: y};
       
         }
     }
@@ -196,13 +204,61 @@ function eraseImage(){
     deleteEventListener(startErase, keepErase, endErase);
 }
 
-//удаление обработчика событий
-function deleteEventListener(firstFunc, secondFunc, thirdFunc) {
+//лупа
+function loupeZoom(e){
+    var scale = 1;
+    var width = canvas.width;
+    var height = canvas.height;
+
+    var imageData = context.getImageData(0, 0, width, height);
+    
+    var copiedCanvas = document.createElement('canvas');
+    copiedCanvas.setAttribute("width", width);
+    copiedCanvas.setAttribute("height", height);
+
+    copiedCanvas.getContext("2d").putImageData(imageData, 0, 0);
+
+    canvas.addEventListener('mousewheel', wheelZooming);
+    function wheelZooming(e){
+        var delta = e.deltaY || e.detail || e.wheelDelta;
+    
+        if (delta > 0){
+            scale += 0.05;
+        } else if(delta < 0){
+            scale -= 0.05;
+        }
+
+        scale = scale + 0.01;
+        drawContents();
+
+    }
+
+    function drawContents(){
+        var newWidth = width * scale;
+        var newHeight = height * scale;
+        
+        context.save();
+        context.translate(-((newWidth-width)/2), -((newHeight-height)/2));
+        context.scale(scale, scale);
+        context.clearRect(0, 0, width, height);
+        context.drawImage(copiedCanvas, 0, 0);
+        context.restore();
+    }
+
     for(var tool of restTools){
         tool.addEventListener('click', () => {
-            canvas.removeEventListener("mousedown", firstFunc);
-            canvas.removeEventListener("mousemove", secondFunc);
-            canvas.removeEventListener("mouseup", thirdFunc);
+            canvas.removeEventListener('mousewheel', wheelZooming);
+        });   
+    }
+}
+
+//удаление обработчика событий
+function deleteEventListener(downFunc, moveFunc, upFunc) {
+    for(var tool of restTools){
+        tool.addEventListener('click', () => {
+            canvas.removeEventListener("mousedown", downFunc);
+            canvas.removeEventListener("mousemove", moveFunc);
+            canvas.removeEventListener("mouseup", upFunc);
         });   
     }
 }
@@ -230,18 +286,59 @@ function undo_last(){
 }
 
 //show palette
-let isPressBtn = false;
+let isPalleteActive = false;
 
 function showPallete(){
-    if ( !isPressBtn ) {
+    if ( !isPalleteActive ) {
         colorInput.style.display = 'block';
-        isPressBtn = true;
+        isPalleteActive = true;
     } else {
         colorInput.style.display = 'none';
-        isPressBtn = false;
+        isPalleteActive = false;
     }
 }
 
+//show eraser range
+let isEraseActive = false;
+
+function showEraserRange(){
+    if ( !isEraseActive ) {
+        eraserWidthRange.style.display = 'block';
+        isEraseActive = true;
+    } else {
+        eraserWidthRange.style.display = 'none';
+        isEraseActive = false;
+    }
+}
+
+//show pencil range
+let isPencilActive = false;
+
+function showPencilRange(){
+    if ( !isPencilActive ) {
+        pencilWidthRange.style.display = 'block';
+        isPencilActive = true;
+    } else {
+        pencilWidthRange.style.display = 'none';
+        isPencilActive = false;
+    }
+}
+
+// pencil width
+pencilWidthRange.addEventListener('input', () => {
+    let pancilValue = pencilWidthRange.value * 2.5;
+    var color = 'linear-gradient(90deg, yellow ' + pancilValue + '%, white ' + pancilValue + '%)';
+
+    pencilWidthRange.style.background = color;
+})
+
+// erase width
+eraserWidthRange.addEventListener('input', () => {
+    let eraseValue = eraserWidthRange.value * 1.5;
+    var color = 'linear-gradient(90deg, yellow ' + eraseValue + '%, white ' + eraseValue + '%)';
+
+    eraserWidthRange.style.background = color;
+})
 
 // добавляем класс activeTool для инструментов
 initElems()

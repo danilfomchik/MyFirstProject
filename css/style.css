@@ -81,7 +81,7 @@ select {
   width: 60px;
   height: 60px;
   border: 1px solid #c2c2c2;
-  margin: 10px auto;
+  margin: 15px auto 15px auto;
   position: relative;
   background-color: #dfdfdf;
   cursor: pointer;
@@ -128,24 +128,128 @@ select {
   cursor: url('../pictures/small-loupe.png') 0 70, pointer;
 }
 .colorInput{
-  width: 100px;
-  height: 40px;
-  margin: 25px auto;
+  width: 75px;
+  height: 30px;
+  margin: 15px auto;
   cursor: pointer;
   display: none;
 }
-.downloadFavicon{
+.pencilWidth{
+  width: 115px;
+  height: 10px;
+  -webkit-appearance: none;
+  background: linear-gradient(90deg, yellow 20%, white 20%);
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  border-radius: 10px;
+  outline: none;
+  box-shadow: 0px 3px 10px 0px #0000009e;
+  display: none;
+}
+
+.eraserWidth{
+  width: 115px;
+  height: 10px;
+  -webkit-appearance: none;
+  background: linear-gradient(90deg, yellow 30%, white 30%);
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  border-radius: 10px;
+  outline: none;
+  box-shadow: 0px 3px 10px 0px #0000009e;
+  display: none;
+}
+
+.pencilWidth:hover {
+  opacity: 1;
+}
+.eraserWidth:hover {
+  opacity: 1;
+}
+
+/* .pencilWidth::after{
+  content: '20';
   position: absolute;
-  top: 650px;
+  left: 85%;
+  top: 31%;
+  font-size: 13px;
+} */
+
+/* .pencilWidth::before{
+  content: '1';
+  position: absolute;
+  left: 5%;
+  top: 31%;
+  font-size: 13px;
+} */
+
+.pencilWidth::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+}
+
+.pencilWidth::-moz-range-thumb{
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+}
+
+.eraserWidth::-moz-range-thumb{
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+}
+
+/* .eraserWidth::after{
+  content: '40';
+  position: absolute;
+  left: 85%;
+  top: 44%;
+  font-size: 13px;
+} */
+
+/* .eraserWidth::before{
+  content: '1';
+  position: absolute;
+  left: 5%;
+  top: 44%;
+  font-size: 13px;
+} */
+
+.eraserWidth::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+}
+
+.downloadFavicon{
+  position: fixed;
+  bottom: 20px;
   width: 50px;
   height: 40px;
   left: 35px;
 }
 .fa-cloud-download-alt{
   color: #747474;
-  position: absolute;
+  position: relative;
   font-size: 40px;
   cursor: pointer;
+  bottom: 0px;
 }
 .fa-cloud-download-alt::before{
   width: 300px;
