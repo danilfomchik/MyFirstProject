@@ -13,7 +13,6 @@ const tools = document.querySelectorAll('.tools');
 var pencilWidthRange = document.querySelector('.pencilWidth');
 var eraserWidthRange = document.querySelector('.eraserWidth');
 
-
 let restTools = [...tools];
 
 var canvasImgArray = [];
@@ -63,23 +62,6 @@ async function getTools(url){
     
         tools[i].addEventListener('click', () => canvas.classList.add(cursor), false) 
     }
-
-    /*
-    //событие для карандаша
-    pencil.addEventListener('click', drawing)
-
-    //очистка листа
-    clear.addEventListener('click', clearCanvas);
-
-    //палитра
-    palette.addEventListener('click', showPallete);
-
-    //ластик
-    eraser.addEventListener('click', eraseImage)
-
-    //undo
-    undoLast.addEventListener('click', undo_last)
-    */
 }
 getTools(toolsData);
 
@@ -142,6 +124,7 @@ function drawing(){
     function endDrow(e){
         mouse.x = e.pageX - this.offsetLeft;
         mouse.y = e.pageY - this.offsetTop;
+        
         context.lineTo(mouse.x, mouse.y);
         context.stroke();
         context.closePath();
@@ -149,7 +132,6 @@ function drawing(){
         
         canvasImgArray.push(context.getImageData(0, 0, canvas.width, canvas.height));
         restoreIndex += 1;
-        console.log('canvasImgArray-->', canvasImgArray);
     }
 
     deleteEventListener(startDrow, keepDrow, endDrow);
@@ -198,7 +180,6 @@ function eraseImage(){
 
         canvasImgArray.push(context.getImageData(0, 0, canvas.width, canvas.height));
         restoreIndex += 1;
-        console.log('canvasImgArray-->', canvasImgArray);
     }
 
     deleteEventListener(startErase, keepErase, endErase);
@@ -220,7 +201,7 @@ function loupeZoom(e){
 
     canvas.addEventListener('mousewheel', wheelZooming);
     function wheelZooming(e){
-        var delta = e.deltaY || e.detail || e.wheelDelta;
+        var delta = e.deltaY;
     
         if (delta > 0){
             scale += 0.05;
@@ -380,7 +361,7 @@ var removeClassList = () => {
 downloadFavicon.addEventListener('click', () => {
     let downloadAccept = confirm('Разрешить скачивание файла?');
 
-    if(downloadAccept === true){
+    if( downloadAccept ){
         let link = document.createElement('a');
         link.download = 'newimage.png';
         link.href = canvas.toDataURL()
