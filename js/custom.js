@@ -48,8 +48,6 @@ async function getTools(url){
         })
     var result = await fetchData;
 
-    console.log('result-->', result);
-
     for(let i = 0; i < result.length; i++){
         let {name:toolName, src:toolImgSrc, cursor} = result[i];
 
@@ -90,7 +88,6 @@ loupe.addEventListener('click', loupeZoom)
 
 //рисование
 function drawing(){
-    console.log('startDraw');
 
     let mouse = { x:0, y:0};
     let draw = false;
@@ -142,7 +139,6 @@ var isPress = false;
 var old = null;
 
 function eraseImage(){
-    console.log('startErase');
 
     canvas.addEventListener('mousedown', startErase);
     function startErase(e){
@@ -283,6 +279,9 @@ function showPallete(){
 let isEraseActive = false;
 
 function showEraserRange(){
+    pencilWidthRange.style.display = 'none';
+    isPencilActive = false;
+
     if ( !isEraseActive ) {
         eraserWidthRange.style.display = 'block';
         isEraseActive = true;
@@ -296,6 +295,9 @@ function showEraserRange(){
 let isPencilActive = false;
 
 function showPencilRange(){
+    eraserWidthRange.style.display = 'none';
+    isEraseActive = false;
+    
     if ( !isPencilActive ) {
         pencilWidthRange.style.display = 'block';
         isPencilActive = true;
@@ -325,8 +327,6 @@ eraserWidthRange.addEventListener('input', () => {
 initElems()
 
 function initElems(){
-
-    console.log('tools-->', tools);
 
     for(let i = 0; i < tools.length; i++){
         tools[i].addEventListener('click', function(event) {
