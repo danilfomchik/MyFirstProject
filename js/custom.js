@@ -266,6 +266,7 @@ function undo_last(){
 let isPalleteActive = false;
 
 function showPallete(){
+
     if ( !isPalleteActive ) {
         colorInput.style.display = 'block';
         isPalleteActive = true;
@@ -279,8 +280,6 @@ function showPallete(){
 let isEraseActive = false;
 
 function showEraserRange(){
-    pencilWidthRange.style.display = 'none';
-    isPencilActive = false;
 
     if ( !isEraseActive ) {
         eraserWidthRange.style.display = 'block';
@@ -295,8 +294,6 @@ function showEraserRange(){
 let isPencilActive = false;
 
 function showPencilRange(){
-    eraserWidthRange.style.display = 'none';
-    isEraseActive = false;
     
     if ( !isPencilActive ) {
         pencilWidthRange.style.display = 'block';
@@ -323,18 +320,35 @@ eraserWidthRange.addEventListener('input', () => {
     eraserWidthRange.style.background = color;
 })
 
+// hide range
+let inputs = document.getElementsByTagName('input');
+
+function hideRange(inputs) {
+    for(let input of inputs){
+        if(input.previousElementSibling.classList.contains('activeTool')){
+            input.style.display = 'block';
+        } else{
+            input.style.display = 'none';
+        }
+    }
+}
+
 // добавляем класс activeTool для инструментов
 initElems()
 
 function initElems(){
 
     for(let i = 0; i < tools.length; i++){
+    
         tools[i].addEventListener('click', function(event) {
+
             deactivateActiveTool();
             removeClassList()
 
             this.classList.add('activeTool')
             event.stopPropagation();
+
+            hideRange(inputs);
         })
     }
 }
